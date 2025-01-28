@@ -1,6 +1,8 @@
 from langchain_core.prompts import PromptTemplate # 프롬프트를 사용할 수 있게 함
 from langchain_openai import ChatOpenAI # 채팅을 할 수 있게 함
+from langchain_ollama import ChatOllama
 from dotenv import load_dotenv
+from langchain_core.output_parsers import StrOutputParser
 
 information = """
     Elon Reeve Musk (/ˈiːlɒn mʌsk/; born June 28, 1971) is a businessman and political figure known for his key roles in the automotive company Tesla, Inc. and the space company SpaceX. He is also known for his ownership of X Corp. (the company that operates the social media platform X, formerly Twitter), and his role in the founding of the Boring Company, xAI, Neuralink, and OpenAI. Musk is the wealthiest individual in the world; as of January 2025, Forbes estimates his net worth to be US$427 billion.
@@ -12,15 +14,19 @@ if __name__ == '__main__':
     print("Hello langchain")
     load_dotenv()
     summary_template = """
-    given information {information} about a persion from I want you to create:
+    given information {information} about a person from I want you to create:
     1. a short summary
     2. two interesting facts about them
 """
 
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template)
 
-    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo") # 온도는 모델이 얼마나 창의적일지를 의미. 0은 창의적이지 않음
-    chain = summary_prompt_template | llm
+     # 온도는 모델이 얼마나 창의적일지를 의미. 0은 창의적이지 않음
+    # llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
+    # llm = ChatOllama(model="llama3.2")
+    llm = ChatOllama(model="mistral")
+
+    chain = summary_prompt_template | llm | StrOutputParser()
 
     res = chain.invoke(input={"information": information})
     print(res)
