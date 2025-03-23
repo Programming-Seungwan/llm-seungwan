@@ -9,6 +9,7 @@ black = "*"
 python-dotenv = "*"
 langchain-core = "*"
 langchain-ollama = "*"
+langchain-community = "*"
 
 [dev-packages]
 
