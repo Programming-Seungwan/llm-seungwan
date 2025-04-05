@@ -5,10 +5,12 @@ from dotenv import load_dotenv
 from langchain_core.output_parsers import StrOutputParser
 
 from third_parties.linkedin import scrape_linkedin_profile
+from agents.linkedin_lookup_agent import lookup as linkedin_lookup_agent
 
-if __name__ == '__main__':
-    print("Hello langchain")
-    load_dotenv()
+def seungwan_with(name: str) -> str:
+    linkedin_username = linkedin_lookup_agent(name = name)
+    linkedin_data = scrape_linkedin_profile(linkedin_profile=linkedin_username)
+
     summary_template = """
     given the linkedin information {information} about a person from I want you to create:
     1. a short summary
@@ -17,10 +19,8 @@ if __name__ == '__main__':
 
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template)
 
-     # 온도는 모델이 얼마나 창의적일지를 의미. 0은 창의적이지 않음
-    llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo")
-    # llm = ChatOllama(model="llama3.2")
-    # llm = ChatOllama(model="mistral")
+    # 온도는 모델이 얼마나 창의적일지를 의미. 0은 창의적이지 않음
+    llm = ChatOllama(temperature=0, model="gemma3:4b")
 
     chain = summary_prompt_template | llm | StrOutputParser()
 
@@ -29,3 +29,11 @@ if __name__ == '__main__':
     res = chain.invoke(input={"information": linkedin_data})
 
     print(res)
+
+
+
+if __name__ == '__main__':
+    load_dotenv()
+    print("Hello langchain")
+
+    seungwan_with(name='eden marco')
