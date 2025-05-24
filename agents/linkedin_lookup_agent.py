@@ -15,11 +15,11 @@ load_dotenv()
 from langchain import hub
 
 def lookup(name: str) -> str:
-  llm = ChatOllama(
-    temperature=0,
-    model="gemma3:4b"
-  )
-  # llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
+  # llm = ChatOllama(
+  #   temperature=0,
+  #   model="gemma3:4b"
+  # )
+  llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
   template = """
   given the full name {name_of_person} I want your to get it me a link to their LinkedIn profile page.
   Your answer should contain only a URL

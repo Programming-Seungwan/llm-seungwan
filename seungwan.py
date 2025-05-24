@@ -20,11 +20,10 @@ def seungwan_with(name: str) -> str:
     summary_prompt_template = PromptTemplate(input_variables=["information"], template=summary_template)
 
     # 온도는 모델이 얼마나 창의적일지를 의미. 0은 창의적이지 않음
-    llm = ChatOllama(temperature=0, model="gemma3:4b")
+    # llm = ChatOllama(temperature=0, model="gemma3:4b")
+    llm = ChatOpenAI(temperature=0, model="gpt-4o-mini")
 
     chain = summary_prompt_template | llm | StrOutputParser()
-
-    linkedin_data = scrape_linkedin_profile(linkedin_profile="https://www.linkedin.com/in/eden-marco/", mock=True)
 
     res = chain.invoke(input={"information": linkedin_data})
 
@@ -36,4 +35,4 @@ if __name__ == '__main__':
     load_dotenv()
     print("Hello langchain")
 
-    seungwan_with(name='eden marco')
+    seungwan_with(name='seungwan kim lawandgood')

@@ -30,6 +30,12 @@ tools_for_agent = [Tool(name="Crawl Google 4 linkedin profile page", func=get_pr
 
 > LLM은 그래봤자 그냥 텍스트를 읽어들이고, 텍스트를 뱉어내는 로보트에 불과한 개념이다. 에이전트는 이를 활용해 LLM의 언어 능력을 "행동"으로 연계하는 시스템 소프트웨어 아키텍쳐 개념에 해당한다.
 
+### 프로젝트 설명
+
+1. 사용자의 스크래핑 input에 따라서 알맞은 linkedIn 유저를 찾아야 함 -> `linkedin_lookup_agent` 에이전트를 이용해서 이름에 알맞는 linkedin 주소를 tavily 엔진으로 찾는다. 이걸 반환!(이떄 agent, 추론 엔진, tool 개념 동반)
+2. 반환된 linkedIn 주소를 가지고 proxyCurl API로 링크드인 데이터를 받는다. 이걸 json 양식으로 반환
+3. 이걸 다시 LLM이 요약할 수 있게!
+
 ### Tavily
 
 기존의 chrome, firefox 같은 브라우저 내부에서 사용되는 검색 엔진은 결국 사람이 보기 위한 것이므로 html, css, js를 받아오는 과정을 거친다. 하지만 LLM이 검색을 대신 해주는 것은 이런 점들이 필요 없기 때문에 그냥 JSON 포맷으로 데이터를 받아오면 된다. 따라서 이에 최적화된 tavily API를 이용하는 것이다.
