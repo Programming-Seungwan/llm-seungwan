@@ -10,6 +10,7 @@ python-dotenv = "*"
 langchain-core = "*"
 langchain-ollama = "*"
 langchain-community = "*"
+langchain-openai = "*"
 
 [dev-packages]
 
